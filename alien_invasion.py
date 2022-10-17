@@ -1,7 +1,7 @@
-import sys
 import pygame
 from settings import Settings
 from nave import Nave
+import funciones_juego as fj
 
 def run_game():
     #Inicializamos el juego y creamos un objeto pantalla
@@ -11,21 +11,15 @@ def run_game():
     pygame.display.set_caption("Invasion alienigena")   
 
     #Crea una nave
-    nave = Nave(pantalla)
+    nave = Nave(ai_settings,pantalla)
 
     while True:
-        #Con el ciclo for detectamos todos los eventos(teclado o raton) que suceden dentro de pygame
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-        
-        #Cambia color de fondo 
-        pantalla.fill(ai_settings.bg_color)
-        #Dibuja la nave sobre la pantalla
-        nave.blitme()
-        
-        #Actualiza a la pantalla mas reciente
-        pygame.display.flip()
+        #Escuchar eventos de teclado o raton
+        fj.vericar_eventos(nave) 
+        #Actualiza la posicion de la nave en respuesta a los eventos(segun las teclas que presione el jugador)
+        nave.update()       
+        #Esto actualiza la pantalla en la funcion actualizar
+        fj.actualizar_pantalla(ai_settings,pantalla,nave)
 
 if __name__ == "__main__":
     run_game()

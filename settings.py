@@ -7,3 +7,5 @@ class Settings():
         self.screen_height = 600
         self.bg_color = (230,230,230)
         
+        #Configuracion de la nave
+        self.factor_velocidad_nave = 1.5
