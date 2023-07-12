@@ -17,7 +17,6 @@ class Bala(Sprite):
 
         #Almacena la posicion de la bala como un valor decimal 
         self.y = float(self.rect.y)
-        self.color = ai_settings.bala_color
         self.factor_velocidad = ai_settings.bala_factor_velocidad
 
     def update(self):
@@ -29,5 +28,5 @@ class Bala(Sprite):
 
     def draw_bala(self):
         """Dibuja la bala en la pantalla"""
-        pygame.draw.rect(self.pantalla,self.color, self.rect)
+        self.pantalla.blit(self.imagen,self.rect)
         
