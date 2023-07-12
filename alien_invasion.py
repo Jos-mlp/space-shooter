@@ -1,4 +1,5 @@
 import pygame
+from pygame.sprite import Group
 from settings import Settings
 from nave import Nave
 import funciones_juego as fj
@@ -12,14 +13,18 @@ def run_game():
 
     #Crea una nave
     nave = Nave(ai_settings,pantalla)
+    #Crea un grupo para almacenar las balas
+    balas = Group()
 
     while True:
         #Escuchar eventos de teclado o raton
-        fj.vericar_eventos(nave) 
+        fj.vericar_eventos(ai_settings,pantalla,nave, balas) 
         #Actualiza la posicion de la nave en respuesta a los eventos(segun las teclas que presione el jugador)
-        nave.update()       
+        nave.update()
+        #Actualiza balas
+        balas.update()       
         #Esto actualiza la pantalla en la funcion actualizar
-        fj.actualizar_pantalla(ai_settings,pantalla,nave)
+        fj.actualizar_pantalla(ai_settings,pantalla,nave,balas)
 
 if __name__ == "__main__":
     run_game()

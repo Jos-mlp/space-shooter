@@ -7,7 +7,7 @@ class Nave():
         self.pantalla = pantalla
         self.ai_settings = ai_settings
         #Carga la imagen de la nave y obtiene su rectangulo(rect)
-        self.imagen = pygame.image.load("imagenes/nave.bmp")
+        self.imagen = pygame.image.load("imagenes/nave.png")
         self.rect = self.imagen.get_rect()
         self.pantalla_rect = pantalla.get_rect()
 
@@ -32,6 +32,7 @@ class Nave():
 
         #Actualiza el objeto rect desde la variable self.center
         self.rect.centerx = self.center
+        
     def blitme(self):
         """Dibuja la nave en su ubicacion actual"""
         self.pantalla.blit(self.imagen,self.rect)
