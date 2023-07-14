@@ -10,8 +10,9 @@ def verificar_eventos_keydown(event, ai_settings,pantalla,nave,balas):
         nave.moving_left = True
     elif event.key == pygame.K_SPACE:
         #Crea una nueva bala y la agrega al grupo de balas
-        nueva_bala = Bala(ai_settings, pantalla, nave)
-        balas.add(nueva_bala)
+        if len(balas) < ai_settings.balas_allowed:
+            nueva_bala = Bala(ai_settings, pantalla, nave)
+            balas.add(nueva_bala)
 
 def verificar_eventos_keyup(event,nave):
     """Responde a cuando se sueltan las teclas"""

@@ -25,7 +25,7 @@ class Bala(Sprite):
         self.y -= self.factor_velocidad
         #Actualiza la posicion del rect
         self.rect.y = self.y
-
+    
     def draw_bala(self):
         """Dibuja la bala en la pantalla"""
         self.pantalla.blit(self.imagen,self.rect)

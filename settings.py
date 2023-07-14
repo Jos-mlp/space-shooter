@@ -12,3 +12,4 @@ class Settings():
         
         #Configuraciones de las balas
         self.bala_factor_velocidad = 1
+        self.balas_allowed = 3
