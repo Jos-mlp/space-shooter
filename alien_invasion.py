@@ -22,7 +22,11 @@ def run_game():
         #Actualiza la posicion de la nave en respuesta a los eventos(segun las teclas que presione el jugador)
         nave.update()
         #Actualiza balas
-        balas.update()       
+        balas.update()  
+        #Elimina las balas antiguas
+        for bala in balas.copy():
+            if bala.rect.bottom <= 0 :
+                balas.remove(bala)  
         #Esto actualiza la pantalla en la funcion actualizar
         fj.actualizar_pantalla(ai_settings,pantalla,nave,balas)
 
