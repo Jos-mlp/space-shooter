@@ -144,19 +144,22 @@ def change_fleet_direction(ai_settings,aliens):
 
 def nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas):
     """Responde a una nave siendo golpeada por un alien"""
-    #Disminuye naves restantes
-    estadisticas.naves_restantes -= 1
+    if estadisticas.naves_restantes > 0:
+        #Disminuye naves restantes
+        estadisticas.naves_restantes -= 1
 
-    #Vacia la lista de aliens y balas
-    aliens.empty()
-    balas.empty()
+        #Vacia la lista de aliens y balas
+        aliens.empty()
+        balas.empty()
 
-    #Crea una nueva flota y centra la nave
-    crear_flota(ai_settings,nave, pantalla, aliens)
-    nave.centrar_nave()
+        #Crea una nueva flota y centra la nave
+        crear_flota(ai_settings,nave, pantalla, aliens)
+        nave.centrar_nave()
 
-    #Pausa
-    sleep(0.5)
+        #Pausa
+        sleep(0.5)
+    else:
+        estadisticas.game_active = False
 
 def check_aliens_bottom(ai_settings,estadisticas,pantalla,nave,aliens,balas):
     """Comprueba si algun alien ha llegado al final de la pantalla"""
