@@ -142,9 +142,6 @@ def change_fleet_direction(ai_settings,aliens):
         alien.rect.y += ai_settings.fleet_drop_speed
     ai_settings.fleet_direction *= -1
 
-def nave_golpeada_animation(nave):
-    pass
-
 def nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas):
     """Responde a una nave siendo golpeada por un alien"""
     #Disminuye naves restantes
@@ -158,9 +155,16 @@ def nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas):
     crear_flota(ai_settings,nave, pantalla, aliens)
     nave.centrar_nave()
 
-    
     #Pausa
     sleep(0.5)
+
+def check_aliens_bottom(ai_settings,estadisticas,pantalla,nave,aliens,balas):
+    """Comprueba si algun alien ha llegado al final de la pantalla"""
+    pantalla_rect = pantalla.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= pantalla_rect.bottom:
+            #Trata esto de la misma forma que si la nave fuera golpeada
+            nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas)
 
 def update_aliens(ai_settings,estadisticas,pantalla,nave,aliens,balas):
     """Comprueba si la flota esta al borde
@@ -172,3 +176,5 @@ def update_aliens(ai_settings,estadisticas,pantalla,nave,aliens,balas):
     if pygame.sprite.spritecollide(nave, aliens,False):
         nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas)
     
+    #Busca aliesn que golpean la parte inferior de la pantalla
+    check_aliens_bottom(ai_settings,estadisticas,pantalla,nave,aliens,balas)
