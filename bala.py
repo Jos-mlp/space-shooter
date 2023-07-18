@@ -11,6 +11,7 @@ class Bala(Sprite):
         #Crea una bala rectangular en (0,0) y luego establece 
         # la posicion correcta
         self.imagen = pygame.image.load("imagenes/B1.png")
+        self.disparo = pygame.mixer.Sound("sound/laser.wav")
         self.rect = self.imagen.get_rect()
         self.rect.centerx = nave.rect.centerx
         self.rect.top = nave.rect.top

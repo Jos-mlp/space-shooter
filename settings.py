@@ -9,6 +9,7 @@ class Settings():
         
         #Configuracion de la nave
         self.factor_velocidad_nave = 1.5
+        self.cantidad_naves = 3
         
         #Configuraciones de las balas
         self.bala_factor_velocidad = 1
@@ -16,7 +17,7 @@ class Settings():
 
         #Configuraciones de Alien
         self.alien_speed_factor = 0.5
-        self.fleet_drop_speed = 10
+        self.fleet_drop_speed = 20
         #fleet_direction,(si es 1 representa derecha), (si es -1 representa izquierda)
         self.fleet_direction= 1
         
