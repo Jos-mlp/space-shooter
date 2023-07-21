@@ -64,7 +64,8 @@ def check_play_button(ai_settings,pantalla,estadisticas,play_button,nave,aliens,
         crear_flota(ai_settings,nave, pantalla, aliens)
         nave.centrar_nave()
 
-def actualizar_pantalla(ai_settings,pantalla,estadisticas,nave,aliens,balas,play_button):
+def actualizar_pantalla(ai_settings,pantalla,estadisticas
+                    ,marcador,nave,aliens,balas,play_button):
     """Actualiza las imagenes en la pantalla y pasa a la nueva pantalla"""
     #Cambia color de fondo 
     pantalla.fill(ai_settings.bg_color)
@@ -81,6 +82,9 @@ def actualizar_pantalla(ai_settings,pantalla,estadisticas,nave,aliens,balas,play
     if not estadisticas.game_active:
         play_button.draw_button()
 
+    #Dibuja la informacion de la puntuacion
+    marcador.draw_puntaje()
+    
     #Actualiza a la pantalla mas reciente
     pygame.display.flip()
 

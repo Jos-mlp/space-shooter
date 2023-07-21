@@ -26,7 +26,7 @@ class Marcador():
         
         #Muestra el puntaje en la esquina superior derecha de la pantalla
         self.puntaje_rect = self.puntaje_imagen.get_rect()
-        self.puntaje_rect.right = self.pantalla_recta.right - 20
+        self.puntaje_rect.right = self.pantalla_rect.right - 20
         self.puntaje_rect.top = 20
     
     def draw_puntaje(self):
