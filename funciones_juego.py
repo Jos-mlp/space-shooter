@@ -22,7 +22,7 @@ def verificar_eventos_keyup(event,nave):
     elif event.key == pygame.K_LEFT:
         nave.moving_left = False
 
-def vericar_eventos(ai_settings,pantalla,nave,balas):
+def vericar_eventos(ai_settings,pantalla,estadisticas,play_button,nave,aliens,balas):
     """Responde a las pulsaciones de teclas y los eventos del raton"""
     #Con el ciclo for detectamos todos los eventos(teclado o raton) que suceden dentro de pygame
     for event in pygame.event.get():
@@ -37,9 +37,34 @@ def vericar_eventos(ai_settings,pantalla,nave,balas):
         elif event.type == pygame.KEYUP:
             verificar_eventos_keyup(event,nave)
 
-    
+        #Registra cuando se presiona el boton del mouse
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(ai_settings,pantalla,estadisticas,play_button,nave,aliens,balas, mouse_x, mouse_y)
 
-def actualizar_pantalla(ai_settings,pantalla,nave,aliens,balas):
+def check_play_button(ai_settings,pantalla,estadisticas,play_button,nave,aliens,balas, mouse_x, mouse_y):
+    """Comienza un nuevo juego cuando el jugador da click en play"""
+    button_clicked = play_button.rect.collidepoint(mouse_x,mouse_y)
+    if button_clicked and not estadisticas.game_active:
+        #Inicializa la configuracion del juego
+        ai_settings.inicializa_configuraciones_dinamicas()
+        
+        #Ocultar el cursor del mouse
+        pygame.mouse.set_visible(False)
+
+        #Restablece las estadisticas del juego
+        estadisticas.reset_stats()
+        estadisticas.game_active = True
+
+        #Vacia la lista de aliens y balas
+        aliens.empty()
+        balas.empty()
+
+        #Crea una nueva flota y centra la nave
+        crear_flota(ai_settings,nave, pantalla, aliens)
+        nave.centrar_nave()
+
+def actualizar_pantalla(ai_settings,pantalla,estadisticas,nave,aliens,balas,play_button):
     """Actualiza las imagenes en la pantalla y pasa a la nueva pantalla"""
     #Cambia color de fondo 
     pantalla.fill(ai_settings.bg_color)
@@ -51,6 +76,10 @@ def actualizar_pantalla(ai_settings,pantalla,nave,aliens,balas):
     nave.blitme()
     #Dibuja en la pantalla cada alien en el grupo dependiendo el rect
     aliens.draw(pantalla)
+
+    #Dibuja el boton de play si el juego esta inactivo
+    if not estadisticas.game_active:
+        play_button.draw_button()
 
     #Actualiza a la pantalla mas reciente
     pygame.display.flip()
@@ -77,6 +106,7 @@ def check_bala_alien_collisions(ai_settings,nave, pantalla, aliens, balas):
     if len(aliens)==0:
         #Destruye balas existentes y crea una nueva flota
         balas.empty()
+        ai_settings.aumentar_velocidad()
         crear_flota(ai_settings,nave, pantalla, aliens)
 
 def fuego_bala(ai_settings,pantalla,nave,balas):
@@ -160,6 +190,9 @@ def nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas):
         sleep(0.5)
     else:
         estadisticas.game_active = False
+
+        #Muestra el cursor del mouse
+        pygame.mouse.set_visible(True)
 
 def check_aliens_bottom(ai_settings,estadisticas,pantalla,nave,aliens,balas):
     """Comprueba si algun alien ha llegado al final de la pantalla"""

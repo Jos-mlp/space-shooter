@@ -2,6 +2,7 @@ import pygame
 from pygame.sprite import Group
 from settings import Settings
 from estadisticas import Estadisticas
+from button import Button
 from nave import Nave
 import funciones_juego as fj
 
@@ -11,6 +12,9 @@ def run_game():
     ai_settings = Settings() #Inicializamos las configuraciones y las guardamos en ai_settings
     pantalla = pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_height))
     pygame.display.set_caption("Invasion alienigena")   
+
+    #Crea el boton play
+    play_button = Button(ai_settings, pantalla, "Play")
 
     #Crea una instancia para almacenar estadisticas del juego
     estadisticas = Estadisticas(ai_settings) 
@@ -26,8 +30,7 @@ def run_game():
     #Inicializa el bucle principal del juego
     while True:
         #Escuchar eventos de teclado o raton
-        fj.vericar_eventos(ai_settings,pantalla,nave, balas)
-         
+        fj.vericar_eventos(ai_settings,pantalla,estadisticas,play_button,nave,aliens,balas)
         if estadisticas.game_active:
             #Actualiza la posicion de la nave en respuesta a los eventos(segun las teclas que presione el jugador)
             nave.update()
@@ -37,7 +40,7 @@ def run_game():
             fj.update_aliens(ai_settings,estadisticas,pantalla,nave,aliens,balas)
         
         #Esto actualiza la pantalla en la funcion actualizar
-        fj.actualizar_pantalla(ai_settings,pantalla,nave,aliens,balas)
+        fj.actualizar_pantalla(ai_settings,pantalla,estadisticas,nave,aliens,balas,play_button)
 
 if __name__ == "__main__":
     run_game()
