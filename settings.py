@@ -34,7 +34,10 @@ class Settings():
 
         #fleet_direction,(si es 1 representa derecha), (si es -1 representa izquierda)
         self.fleet_direction= 1
-    
+
+        #Puntuacion
+        self.puntos_alien = 50
+
     def aumentar_velocidad(self):
         """Aumenta la configuracion de velocidad"""
         self.factor_velocidad_nave *= self.escala_aceleracion

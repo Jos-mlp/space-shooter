@@ -88,7 +88,8 @@ def actualizar_pantalla(ai_settings,pantalla,estadisticas
     #Actualiza a la pantalla mas reciente
     pygame.display.flip()
 
-def update_balas(ai_settings,nave, pantalla, aliens, balas):
+def update_balas(ai_settings,nave, pantalla
+                    ,estadisticas,marcador, aliens, balas):
     """Actualiza la posicion de las balas y elimina las antiguas"""
     #Actualiza las posiciones de las balas
     balas.update()  
@@ -98,14 +99,20 @@ def update_balas(ai_settings,nave, pantalla, aliens, balas):
         if bala.rect.bottom <= 0 :
             balas.remove(bala) 
     
-    check_bala_alien_collisions(ai_settings,nave, pantalla, aliens, balas)
+    check_bala_alien_collisions(ai_settings,nave, pantalla
+                    ,estadisticas,marcador, aliens, balas)
 
 
-def check_bala_alien_collisions(ai_settings,nave, pantalla, aliens, balas):
+def check_bala_alien_collisions(ai_settings,nave, pantalla
+                    ,estadisticas,marcador, aliens, balas):
     """Responde a las colisiones entre balas y aliens"""
     #Elimina las balas y los aliens que colisionaron
-    colisions = pygame.sprite.groupcollide(balas, aliens, True, True)
     #True desaparece al objeto, false no desaparece al objeto del grupo
+    colisions = pygame.sprite.groupcollide(balas, aliens, True, True)
+    
+    if colisions:
+        estadisticas.puntaje += ai_settings.puntos_alien
+        marcador.prep_puntaje()
     
     if len(aliens)==0:
         #Destruye balas existentes y crea una nueva flota

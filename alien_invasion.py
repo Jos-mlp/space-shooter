@@ -37,7 +37,8 @@ def run_game():
             #Actualiza la posicion de la nave en respuesta a los eventos(segun las teclas que presione el jugador)
             nave.update()
             #Actualiza pocision bala y elimina balas
-            fj.update_balas(ai_settings,nave, pantalla, aliens, balas)
+            fj.update_balas(ai_settings,nave, pantalla
+                    ,estadisticas,marcador, aliens, balas)
             #Actualiza posicion aliens
             fj.update_aliens(ai_settings,estadisticas,pantalla,nave,aliens,balas)
         
