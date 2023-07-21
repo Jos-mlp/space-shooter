@@ -63,6 +63,7 @@ def check_play_button(ai_settings,pantalla,estadisticas,marcador,play_button,nav
         marcador.prep_puntaje()
         marcador.prep_alto_puntaje()
         marcador.prep_nivel()
+        marcador.prep_naves()
 
         #Vacia la lista de aliens y balas
         aliens.empty()
@@ -205,11 +206,14 @@ def change_fleet_direction(ai_settings,aliens):
         alien.rect.y += ai_settings.fleet_drop_speed
     ai_settings.fleet_direction *= -1
 
-def nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas):
+def nave_golpeada(ai_settings,estadisticas,pantalla,marcador,nave,aliens,balas):
     """Responde a una nave siendo golpeada por un alien"""
     if estadisticas.naves_restantes > 0:
         #Disminuye naves restantes
         estadisticas.naves_restantes -= 1
+
+        #Actualiza el marcador
+        marcador.prep_naves()
 
         #Vacia la lista de aliens y balas
         aliens.empty()
@@ -227,15 +231,16 @@ def nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas):
         #Muestra el cursor del mouse
         pygame.mouse.set_visible(True)
 
-def check_aliens_bottom(ai_settings,estadisticas,pantalla,nave,aliens,balas):
+def check_aliens_bottom(ai_settings,estadisticas,pantalla,marcador,nave,aliens,balas):
     """Comprueba si algun alien ha llegado al final de la pantalla"""
     pantalla_rect = pantalla.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= pantalla_rect.bottom:
             #Trata esto de la misma forma que si la nave fuera golpeada
-            nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas)
+            nave_golpeada(ai_settings,estadisticas,pantalla,marcador,nave,aliens,balas)
+            break
 
-def update_aliens(ai_settings,estadisticas,pantalla,nave,aliens,balas):
+def update_aliens(ai_settings,estadisticas,pantalla,marcador,nave,aliens,balas):
     """Comprueba si la flota esta al borde
     y actualiza las posiciones de todos los aliens de la flota"""
     check_fleet_edges(ai_settings,aliens)
@@ -243,7 +248,7 @@ def update_aliens(ai_settings,estadisticas,pantalla,nave,aliens,balas):
 
     #Busca colisiones de nave-alien
     if pygame.sprite.spritecollide(nave, aliens,False):
-        nave_golpeada(ai_settings,estadisticas,pantalla,nave,aliens,balas)
+        nave_golpeada(ai_settings,estadisticas,pantalla,marcador,nave,aliens,balas)
     
     #Busca aliesn que golpean la parte inferior de la pantalla
-    check_aliens_bottom(ai_settings,estadisticas,pantalla,nave,aliens,balas)
+    check_aliens_bottom(ai_settings,estadisticas,pantalla,marcador,nave,aliens,balas)

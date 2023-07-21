@@ -1,4 +1,6 @@
 import pygame.font
+from pygame.sprite import Group
+from nave import Nave
 
 class Marcador():
     """Clase para reportar informacion sobre puntuacion"""
@@ -19,6 +21,7 @@ class Marcador():
         self.prep_puntaje()
         self.prep_alto_puntaje()
         self.prep_nivel()
+        self.prep_naves()
 
     def prep_nivel(self):
         """Convierte el nivel en una imagen renderizada"""
@@ -61,8 +64,20 @@ class Marcador():
         self.puntaje_rect.right = self.pantalla_rect.right - 20
         self.puntaje_rect.top = 20
     
+    def prep_naves(self):
+        """Muestra cuantas naves(vidas) quedan"""
+        self.naves = Group()
+        for numero_nave in range(self.estadisticas.naves_restantes):
+            nave = Nave(self.ai_settings,self.pantalla)
+            nave.rect.x = 10 + numero_nave * (nave.rect.width + 5)
+            nave.rect.y = 10
+            self.naves.add(nave)
+
     def draw_puntaje(self):
         """Dibuja la puntuacion en la pantalla"""
         self.pantalla.blit(self.puntaje_imagen, self.puntaje_rect)
         self.pantalla.blit(self.alto_puntaje_imagen, self.alto_puntaje_rect)
         self.pantalla.blit(self.nivel_imagen, self.nivel_rect)
+
+        #Dibuja las naves
+        self.naves.draw(self.pantalla)
