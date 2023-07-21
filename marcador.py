@@ -18,10 +18,21 @@ class Marcador():
         #Prepara la imagen del puntaje inicial
         self.prep_puntaje()
         self.prep_alto_puntaje()
+        self.prep_nivel()
 
+    def prep_nivel(self):
+        """Convierte el nivel en una imagen renderizada"""
+        #Renderiza en una imagen el marcador
+        nivel = "Nivel: " + str(self.estadisticas.nivel)
+        self.nivel_imagen = self.font.render( nivel,True,self.text_color, self.ai_settings.bg_color)
+        
+        #Centra el puntaje mas alto en la parte superior de la pantalla
+        self.nivel_rect = self.nivel_imagen.get_rect()
+        self.nivel_rect.right = self.pantalla_rect.right - 20
+        self.nivel_rect.top = self.puntaje_rect.bottom + 10
 
     def prep_alto_puntaje(self):
-        """Convierte el marcador en una imagen renderizada"""
+        """Convierte la puntuacion mas alta en una imagen renderizada"""
         #Le agrega formato al marcador
         puntaje_alto = int(round(self.estadisticas.alto_puntaje, -1))
         alto_puntaje_str = "{:,}".format(puntaje_alto)
@@ -54,3 +65,4 @@ class Marcador():
         """Dibuja la puntuacion en la pantalla"""
         self.pantalla.blit(self.puntaje_imagen, self.puntaje_rect)
         self.pantalla.blit(self.alto_puntaje_imagen, self.alto_puntaje_rect)
+        self.pantalla.blit(self.nivel_imagen, self.nivel_rect)

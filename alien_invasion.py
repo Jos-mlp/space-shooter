@@ -32,7 +32,8 @@ def run_game():
     #Inicializa el bucle principal del juego
     while True:
         #Escuchar eventos de teclado o raton
-        fj.vericar_eventos(ai_settings,pantalla,estadisticas,play_button,nave,aliens,balas)
+        fj.vericar_eventos(ai_settings,pantalla,estadisticas,marcador,play_button,nave,
+                      aliens,balas)
         if estadisticas.game_active:
             #Actualiza la posicion de la nave en respuesta a los eventos(segun las teclas que presione el jugador)
             nave.update()

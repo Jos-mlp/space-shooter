@@ -22,7 +22,8 @@ def verificar_eventos_keyup(event,nave):
     elif event.key == pygame.K_LEFT:
         nave.moving_left = False
 
-def vericar_eventos(ai_settings,pantalla,estadisticas,play_button,nave,aliens,balas):
+def vericar_eventos(ai_settings,pantalla,estadisticas,marcador,play_button,nave,
+                      aliens,balas,):
     """Responde a las pulsaciones de teclas y los eventos del raton"""
     #Con el ciclo for detectamos todos los eventos(teclado o raton) que suceden dentro de pygame
     for event in pygame.event.get():
@@ -40,9 +41,11 @@ def vericar_eventos(ai_settings,pantalla,estadisticas,play_button,nave,aliens,ba
         #Registra cuando se presiona el boton del mouse
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_settings,pantalla,estadisticas,play_button,nave,aliens,balas, mouse_x, mouse_y)
+            check_play_button(ai_settings,pantalla,estadisticas,marcador,play_button,nave,
+                      aliens,balas, mouse_x, mouse_y)
 
-def check_play_button(ai_settings,pantalla,estadisticas,play_button,nave,aliens,balas, mouse_x, mouse_y):
+def check_play_button(ai_settings,pantalla,estadisticas,marcador,play_button,nave,
+                      aliens,balas, mouse_x, mouse_y):
     """Comienza un nuevo juego cuando el jugador da click en play"""
     button_clicked = play_button.rect.collidepoint(mouse_x,mouse_y)
     if button_clicked and not estadisticas.game_active:
@@ -55,6 +58,11 @@ def check_play_button(ai_settings,pantalla,estadisticas,play_button,nave,aliens,
         #Restablece las estadisticas del juego
         estadisticas.reset_stats()
         estadisticas.game_active = True
+
+        #Restablece las imagenes del marcador
+        marcador.prep_puntaje()
+        marcador.prep_alto_puntaje()
+        marcador.prep_nivel()
 
         #Vacia la lista de aliens y balas
         aliens.empty()
@@ -117,9 +125,15 @@ def check_bala_alien_collisions(ai_settings,nave, pantalla
         check_alto_puntaje(estadisticas,marcador)
 
     if len(aliens)==0:
-        #Destruye balas existentes y crea una nueva flota
+        #Destruye balas existentes y aumenta velocidad de balas, aliens
         balas.empty()
         ai_settings.aumentar_velocidad()
+
+        #Incrementa el nivel
+        estadisticas.nivel += 1
+        marcador.prep_nivel()
+
+        #Crea una nueva flota
         crear_flota(ai_settings,nave, pantalla, aliens)
 
 def check_alto_puntaje(estadisticas, marcador):
