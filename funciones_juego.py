@@ -111,14 +111,22 @@ def check_bala_alien_collisions(ai_settings,nave, pantalla
     colisions = pygame.sprite.groupcollide(balas, aliens, True, True)
     
     if colisions:
-        estadisticas.puntaje += ai_settings.puntos_alien
-        marcador.prep_puntaje()
-    
+        for aliens in colisions.values():
+            estadisticas.puntaje += ai_settings.puntos_alien * len(aliens)
+            marcador.prep_puntaje()
+        check_alto_puntaje(estadisticas,marcador)
+
     if len(aliens)==0:
         #Destruye balas existentes y crea una nueva flota
         balas.empty()
         ai_settings.aumentar_velocidad()
         crear_flota(ai_settings,nave, pantalla, aliens)
+
+def check_alto_puntaje(estadisticas, marcador):
+    """Verifica si existe un puntaje mas alto"""
+    if estadisticas.puntaje > estadisticas.alto_puntaje:
+        estadisticas.alto_puntaje = estadisticas.puntaje
+        marcador.prep_alto_puntaje()
 
 def fuego_bala(ai_settings,pantalla,nave,balas):
     """Dispara una bala si aun no ah alcanzado el limite"""

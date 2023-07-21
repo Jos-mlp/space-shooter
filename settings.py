@@ -19,6 +19,9 @@ class Settings():
         #Que tan rapido se acelera el jurgo
         self.escala_aceleracion = 1.1
 
+        #Que tan rapido aumentan los valores de puntos por alien
+        self.escala_puntaje = 1.5
+        
         self.inicializa_configuraciones_dinamicas()
 
     def inicializa_configuraciones_dinamicas(self):
@@ -39,7 +42,10 @@ class Settings():
         self.puntos_alien = 50
 
     def aumentar_velocidad(self):
-        """Aumenta la configuracion de velocidad"""
+        """Aumenta la configuracion de velocidad y los valores de puntos por alien"""
         self.factor_velocidad_nave *= self.escala_aceleracion
         self.bala_factor_velocidad *= self.escala_aceleracion
         self.alien_speed_factor *= self.escala_aceleracion
+        
+        self.puntos_alien = int(self.puntos_alien * self.escala_puntaje)
+        
