@@ -77,7 +77,7 @@ def actualizar_pantalla(ai_settings,pantalla,estadisticas
                     ,marcador,nave,aliens,balas,play_button):
     """Actualiza las imagenes en la pantalla y pasa a la nueva pantalla"""
     #Cambia color de fondo 
-    pantalla.fill(ai_settings.bg_color)
+    pantalla.blit(ai_settings.image,ai_settings.image_pantalla_rect)
 
     #vuelve a dibujar todas las balas detras de la nave y de los extraterrestres
     for bala in balas.sprites():
@@ -124,6 +124,7 @@ def check_bala_alien_collisions(ai_settings,nave, pantalla
             estadisticas.puntaje += ai_settings.puntos_alien * len(aliens)
             marcador.prep_puntaje()
         check_alto_puntaje(estadisticas,marcador)
+        pygame.mixer.Sound.play(ai_settings.golpe)
 
     if len(aliens)==0:
         #Destruye balas existentes y aumenta velocidad de balas, aliens
@@ -150,7 +151,7 @@ def fuego_bala(ai_settings,pantalla,nave,balas):
         nueva_bala = Bala(ai_settings, pantalla, nave)
         balas.add(nueva_bala)
         #Reproduce el sonido del disparo de la nueva bala
-        pygame.mixer.Sound.play(nueva_bala.disparo)
+        pygame.mixer.Sound.play(ai_settings.disparo)
 
 def get_number_aliens_x(ai_settings,alien_width):
     """Determina el numero de alienigenas que caben en una fila"""
@@ -208,6 +209,7 @@ def change_fleet_direction(ai_settings,aliens):
 
 def nave_golpeada(ai_settings,estadisticas,pantalla,marcador,nave,aliens,balas):
     """Responde a una nave siendo golpeada por un alien"""
+    nave.draw_explocion_nave(ai_settings)
     if estadisticas.naves_restantes > 0:
         #Disminuye naves restantes
         estadisticas.naves_restantes -= 1
