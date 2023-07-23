@@ -12,7 +12,7 @@ def run_game():
     pygame.init()
     ai_settings = Settings() #Inicializamos las configuraciones y las guardamos en ai_settings
     pantalla = pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_height))
-    pygame.display.set_caption("Invasion alienigena")   
+    pygame.display.set_caption(ai_settings.title_window)   
 
     #Crea el boton play
     play_button = Button(ai_settings, pantalla, "Play")
@@ -25,7 +25,7 @@ def run_game():
     nave = Nave(ai_settings,pantalla)
     aliens = Group()
     balas = Group()
-    
+
     #Crea la flota de aliens
     fj.crear_flota(ai_settings,nave, pantalla, aliens)
 

@@ -14,7 +14,7 @@ class Marcador():
         self.estadisticas = estadisticas
 
         #Ajustes de fuente para la informacion de puntuacion
-        self.text_color = (30,30,30)
+        self.text_color = (255,255,255)
         self.font = pygame.font.SysFont(None, 48)
 
         #Prepara la imagen del puntaje inicial
@@ -53,7 +53,7 @@ class Marcador():
         """Convierte el marcador en una imagen renderizada"""
         #Le agrega formato al marcador
         puntaje_redondeado = int(round(self.estadisticas.puntaje, -1))
-        puntaje_str = "{:,}".format(puntaje_redondeado)
+        puntaje_str = "SCORE: " + "{:,}".format(puntaje_redondeado)
 
         #Renderiza en una imagen el marcador
         self.puntaje_imagen = self.font.render(puntaje_str, True, 
@@ -61,8 +61,8 @@ class Marcador():
         
         #Muestra el puntaje en la esquina superior derecha de la pantalla
         self.puntaje_rect = self.puntaje_imagen.get_rect()
-        self.puntaje_rect.right = self.pantalla_rect.right - 20
-        self.puntaje_rect.top = 20
+        self.puntaje_rect.right = self.pantalla_rect.right - 10
+        self.puntaje_rect.top = 5
     
     def prep_naves(self):
         """Muestra cuantas naves(vidas) quedan"""
@@ -76,8 +76,8 @@ class Marcador():
     def draw_puntaje(self):
         """Dibuja la puntuacion en la pantalla"""
         self.pantalla.blit(self.puntaje_imagen, self.puntaje_rect)
-        self.pantalla.blit(self.alto_puntaje_imagen, self.alto_puntaje_rect)
-        self.pantalla.blit(self.nivel_imagen, self.nivel_rect)
+        #self.pantalla.blit(self.alto_puntaje_imagen, self.alto_puntaje_rect)
+        #self.pantalla.blit(self.nivel_imagen, self.nivel_rect)
 
         #Dibuja las naves
         self.naves.draw(self.pantalla)
